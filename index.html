@@ -13,69 +13,73 @@
             font-family: 'Plus Jakarta Sans', sans-serif; 
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade { animation: fadeIn 0.4s ease-out forwards; }
     </style>
 </head>
-<body class="flex items-center justify-center p-4 md:p-8">
+<body class="flex items-center justify-center p-4">
 
-    <div class="glass-card p-8 rounded-[2.5rem] shadow-2xl w-full max-w-lg transition-all duration-500">
-        <div class="text-center mb-8">
-            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Midterm Marks <span class="text-blue-600">Calculator</span></h2>
-            <p class="text-slate-500 mt-2 font-medium">Convert your percentages into midterm score</p>
+    <div class="glass-card p-6 md:p-8 rounded-[2rem] shadow-2xl w-full max-w-lg">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">Midterm Marks <span class="text-blue-600">Calculator</span></h2>
+            <p class="text-slate-500 mt-1 text-sm font-medium">Convert average percentage to 20 marks</p>
         </div>
 
-        <div class="bg-blue-50/80 p-5 rounded-2xl mb-8 border border-blue-100">
-            <h4 class="font-bold text-blue-900 text-sm flex items-center mb-2">
-                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"></path></svg>
+        <div class="bg-blue-50/80 p-5 rounded-2xl mb-8 border border-blue-100 text-left">
+            <h4 class="font-bold text-blue-900 text-sm mb-2 flex items-center">
                 Istemal ka Tarika (Guide)
             </h4>
-            <ul class="text-xs text-blue-800 space-y-2 opacity-90 font-medium">
+            <ul class="text-xs text-blue-800 space-y-2 font-medium">
                 <li>• Tamam subjects ki percentages enter karein.</li>
-                <li>• Har number ke baad <b class="text-blue-600 font-bold">comma (,)</b> lazmi lagayein.</li>
+                <li>• Har number ke baad <b class="text-blue-600">comma (,)</b> lazmi lagayein.</li>
                 <li>• Example: <span class="bg-white px-2 py-0.5 rounded border border-blue-200">45, 60, 55, 70</span></li>
             </ul>
         </div>
         
         <div class="mb-6">
-            <label class="block text-sm font-bold text-slate-700 mb-2 ml-1">Enter Percentages:</label>
-            <input type="text" id="percentages" placeholder="E.g. 50, 65, 40, 72" 
-                class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-300 text-lg font-semibold text-slate-800 placeholder:text-slate-300">
+            <label class="block text-sm font-bold text-slate-700 mb-2 ml-1 text-left">Percentages Enter Karein:</label>
+            <input type="text" id="percentages" placeholder="E.g. 50, 65, 18, 72" 
+                class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-300 text-lg font-semibold text-slate-800">
         </div>
 
         <button onclick="calculate()" 
-            class="w-full bg-slate-900 hover:bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-xl shadow-blue-900/10 transform active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 group">
+            class="w-full bg-slate-900 hover:bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-xl transform active:scale-[0.98] transition-all duration-300 text-center">
             Calculate Result
-            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
         </button>
 
-        <div id="result" class="mt-8 hidden animate-[fadeIn_0.5s_ease-out]">
+        <div id="result" class="mt-8 hidden animate-fade">
+            
+            <div id="statusAlert" class="mb-6 p-4 rounded-xl text-sm font-bold text-center border"></div>
+
             <div class="grid grid-cols-2 gap-3 mb-4 text-center">
                 <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-                    <span class="block text-[10px] uppercase tracking-widest text-slate-400 font-bold">Subjects</span>
+                    <span class="block text-[10px] uppercase tracking-widest text-slate-400 font-bold">Total Subjects</span>
                     <span id="subCount" class="text-lg font-extrabold text-slate-800">0</span>
                 </div>
                 <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-                    <span class="block text-[10px] uppercase tracking-widest text-slate-400 font-bold">Average</span>
+                    <span class="block text-[10px] uppercase tracking-widest text-slate-400 font-bold">Avg Percentage</span>
                     <span id="avgPerc" class="text-lg font-extrabold text-blue-600">0%</span>
                 </div>
             </div>
 
-            <div class="p-8 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2rem] text-center text-white shadow-2xl shadow-blue-500/30 relative overflow-hidden">
-                <div class="relative z-10">
+            <div class="p-6 md:p-8 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2rem] text-center text-white shadow-2xl relative overflow-hidden">
+                <div class="relative z-10 text-center">
                     <p class="text-blue-100 font-bold text-xs uppercase tracking-[0.2em] mb-3">Midterm Final Score</p>
                     <div class="flex items-baseline justify-center">
-                        <span id="marks20" class="text-7xl font-black tracking-tighter">0.00</span>
+                        <span id="marks20" class="text-6xl md:text-7xl font-black tracking-tighter">0.00</span>
                         <span class="text-2xl font-bold text-blue-200 ml-2">/ 20</span>
                     </div>
-                    <div class="mt-6 pt-6 border-t border-white/10">
-                        <p id="finalNote" class="text-sm font-medium leading-relaxed text-blue-50 bg-white/10 p-4 rounded-xl"></p>
+                    <div class="mt-6 pt-5 border-t border-white/10">
+                        <p id="finalNote" class="text-sm font-medium leading-relaxed text-blue-50 bg-white/10 p-4 rounded-xl italic"></p>
                     </div>
                 </div>
-                <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
-                <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-400/20 rounded-full blur-3xl"></div>
             </div>
         </div>
     </div>
@@ -84,14 +88,28 @@
         function calculate() {
             const input = document.getElementById('percentages').value;
             const resDiv = document.getElementById('result');
+            const alertDiv = document.getElementById('statusAlert');
             
             const values = input.split(',')
-                                .map(v => parseFloat(v.trim()))
-                                .filter(v => !isNaN(v));
+                                .map(v => v.trim())
+                                .filter(v => v !== "" && !isNaN(v))
+                                .map(v => parseFloat(v));
 
             if (values.length === 0) {
-                alert("Please enter valid percentages separated by commas!");
+                alert("Please enter valid percentages!");
                 return;
+            }
+
+            const failSubjects = values.filter(v => v < 20).length;
+            
+            if (failSubjects > 0) {
+                alertDiv.className = "mb-6 p-4 rounded-xl text-sm font-bold text-center bg-red-50 text-red-700 border-red-100 border";
+                alertDiv.innerText = failSubjects === 1 
+                    ? "Attention: You have 1 subject with less than 20% marks." 
+                    : `Attention: You have ${failSubjects} subjects with less than 20% marks.`;
+            } else {
+                alertDiv.className = "mb-6 p-4 rounded-xl text-sm font-bold text-center bg-green-50 text-green-700 border-green-100 border";
+                alertDiv.innerText = "Congratulations! You're Pass";
             }
 
             const count = values.length;
@@ -109,15 +127,7 @@
                 "Finals mein aapky jo marks midterm k lgay gay wo " + finalScore + " hain 20 mein sy.";
             
             resDiv.classList.remove('hidden');
-            resDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     </script>
-
-    <style>
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
 </body>
 </html>
